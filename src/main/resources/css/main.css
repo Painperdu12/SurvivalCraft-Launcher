@@ -1,0 +1,37 @@
+.login-layout {
+    -fx-background: rgb(10, 12, 12);
+}
+
+.login-card {
+    -fx-background-color: rgb(127, 179, 213);
+}
+
+.bg-image {
+    -fx-background-image: url("/assets/bg.png");
+    -fx-background-position: center;
+    -fx-background-repeat: stretch;
+}
+
+.login-card .login-title {
+    -fx-text-fill: white;
+}
+
+.login-card .login-infos {
+    -fx-text-fill: white;
+}
+
+.login-card .login-label {
+    -fx-text-fill: white;
+}
+
+.login-card .login-user {
+    -fx-text-fill: white;
+}
+
+.login-card .ms-login-btn {
+    -fx-background-color: rgb(230, 235, 235);
+}
+
+.login-card .ms-login-btn:hover {
+    -fx-background-color: rgb(220, 225, 225);
+}

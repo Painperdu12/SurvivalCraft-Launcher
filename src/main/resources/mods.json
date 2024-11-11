@@ -1,0 +1,16 @@
+{
+  "mods": [
+    {
+      "name": "SurvivalCraft",
+      "downloadURL": "https://www.survivalcraft.org/files/survivalcraft-3.2.1.jar",
+      "sha1": "3f1790e22bd6104fbd1335d9f40b568fe73c9b57",
+      "size": 4927725
+    },
+    {
+      "name": "lightfall-client",
+      "downloadURL": "https://www.survivalcraft.org/files/lightfallclient-1.1.0.jar",
+      "sha1": "89243d325014184dce84d8defc42b2a51c414db4",
+      "size": 11728
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+- 1: A required class is missing
+- 2: An error as occurred when connecting with Microsoft web view
+- 3: An error as occurred when updating game assets
+- 4: An error as occurred when launching the game
