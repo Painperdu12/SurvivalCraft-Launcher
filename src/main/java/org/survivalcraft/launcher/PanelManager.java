@@ -29,8 +29,8 @@ public class PanelManager {
 
     public void init() {
         stage.setTitle(EnumConstants.WINDOW_TITLE.getText());
-        stage.setWidth(840);
-        stage.setHeight(560);
+        stage.setWidth(1324);
+        stage.setHeight(802);
         stage.centerOnScreen();
         stage.getIcons().add(new Image("assets/icon.png"));
 

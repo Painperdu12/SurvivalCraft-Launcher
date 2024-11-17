@@ -4,7 +4,7 @@ public enum EnumSetupStep {
 
     INTEGRATION("Integration des fichiers..."),
     MOD_PACK("Configuration des mods..."),
-    MOD_LOADER("Configuration du Forge Mod Loader..."),
+    MOD_LOADER("Configuration du Forge Mod Loader (Patientez)..."),
     READ("Lecture du fichier json..."),
     DL_LIBS("Téléchargement des librairies nécessaires..."),
     DL_RESOURCES("Téléchargement des resources nécessaires..."),
@@ -15,7 +15,7 @@ public enum EnumSetupStep {
     FORGE("Initialisation de Forge..."),
     CHECK_CHEAT("Vérification de la validité du client..."),
     POST_EXECUTIONS("Exécution post-initialisation..."),
-    END("Fin du processus.");
+    END("Fin du processus d'installation (Le jeu se lance).");
 
     private String details;
     EnumSetupStep(String details) {

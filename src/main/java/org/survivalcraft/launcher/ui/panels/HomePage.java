@@ -30,7 +30,6 @@ import org.survivalcraft.launcher.utils.EnumSetupStep;
 import org.survivalcraft.launcher.utils.GameConstants;
 
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.text.DecimalFormat;
 
 public class HomePage extends ContentPanel {
@@ -115,10 +114,7 @@ public class HomePage extends ContentPanel {
         setProgress(0, 0);
         boxPane.getChildren().addAll(progressBar, stepLabel, fileLabel);
 
-        Thread updateThread = new Thread(this::update);
-        updateThread.setName("Game Update Thread");
-        updateThread.start();
-        Platform.runLater(updateThread);
+        Platform.runLater(() -> new Thread(this::update).start());
     }
 
     public void update() {
@@ -148,12 +144,15 @@ public class HomePage extends ContentPanel {
                 Platform.runLater(() -> {
                     percentTxt = decimalFormat.format(info.getDownloadedBytes() * 100.d / info.getTotalToDownloadBytes());
                     setStatus(String.format("%s, (%s)", stepTxt, percentTxt));
+                    setProgress(info.getDownloadedBytes(), info.getTotalToDownloadBytes());
                 });
             }
         };
 
+        //--------------------------------------------------------------------------------------------------------------------------------------
+
         try {
-            final VanillaVersion vanillaVersion = new VanillaVersion.VanillaVersionBuilder().withName(GameConstants.GAME_VERSION).build();
+            final VanillaVersion vanillaVersion = new VanillaVersion.VanillaVersionBuilder().withName(GameConstants.VERSION).build();
 
             final ForgeVersion forgeVersion = new ForgeVersionBuilder()
                     .withForgeVersion(GameConstants.FORGE_VERSION)
@@ -166,37 +165,35 @@ public class HomePage extends ContentPanel {
                     .withModLoaderVersion(forgeVersion)
                     .withLogger(Launcher.getInstance().getLogger())
                     .withProgressCallback(callback)
-                    .withUpdaterOptions(new UpdaterOptions.UpdaterOptionsBuilder().build())
                     .build();
 
-            //updater.update(Launcher.getInstance().getLauncherDir());
+            updater.update(Launcher.getInstance().getLauncherDir());
             startGame(updater.getVanillaVersion().getName());
 
-        } catch(Exception e) {
-            Launcher.getInstance().getLogger().err(e.getMessage());
-            e.printStackTrace();
+        } catch (Exception e) {
+            Launcher.getInstance().getLogger().printStackTrace(e);
+            Platform.runLater(() -> this.manager.getStage().show());
         }
     }
 
     public void startGame(String gameVersion) {
         try {
-            NoFramework noFramework = new NoFramework(Launcher.getInstance().getLauncherDir(), Launcher.getInstance().getAuthInfos(), GameFolder.FLOW_UPDATER_1_19_SUP);
-            noFramework.getAdditionalArgs().add(getRamArgs());
+            NoFramework noFramework = new NoFramework(Launcher.getInstance().getLauncherDir(), Launcher.getInstance().getAuthInfos(), GameFolder.FLOW_UPDATER);
+            noFramework.getAdditionalVmArgs().add(getRamArgs());
 
-            Process process = noFramework.launch(gameVersion, GameConstants.FORGE_VERSION.split("-")[1], NoFramework.ModLoader.FORGE);
+            Process p = noFramework.launch(gameVersion, GameConstants.FORGE_VERSION.split("-")[1], NoFramework.ModLoader.FORGE);
 
             Platform.runLater(() -> {
                 try {
-                    process.waitFor();
-                    Platform.exit();
-
-                } catch(InterruptedException e) {
-                    throw new RuntimeException(e);
+                    p.waitFor();
+                    this.manager.getStage().hide();
+                } catch (Exception e) {
+                    Launcher.getInstance().getLogger().printStackTrace(e);
                 }
             });
 
-        } catch(Exception e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            Launcher.getInstance().getLogger().printStackTrace(e);
         }
     }
 

@@ -13,10 +13,6 @@ import javafx.application.Platform;
 import javafx.stage.Stage;
 import org.survivalcraft.launcher.ui.panels.MenuSidePanel;
 import org.survivalcraft.launcher.utils.EnumConstants;
-
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 
 public class Launcher extends Application {
